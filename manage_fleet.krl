@@ -22,10 +22,10 @@ ruleset manage_fleet {
     	    	vehicle_name = event:attr("name").defaultsTo(random_name);
   	    }
   	    {
-		wrangler:createChild(name);
+		wrangler:createChild(vehicle_name);
 	    }
   	    always {
-    	    	   log("create vehicle " + name);
+    	    	   log("create vehicle " + vehicle_name);
   	    }
         }
 	rule delete_vehicle {
