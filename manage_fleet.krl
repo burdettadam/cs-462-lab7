@@ -46,27 +46,28 @@ ruleset manage_fleet {
 	     	  log "No vehicle named " + name;
 	     }
 	}
-	rule subscribe_child {
-	     select when fleet_management subscribe_child
-	     pre {
-	     	 sub_attrs = {
-		 	   "name": event:attr("name"),
-			   "name_space": "Fleet",
-			   "my_role": event_attr("fleet"),
-			   "subscriber_role": event:attr("subscriber_role"),
-			   "subscriber_eci": event:attr("subscriber_eci")
-		 };
-	     }
-	     if (not sub_attrs{"name"}.isnull() && not sub_attrs{"subscriber_eci"}.isnull()) then {
-	     	send_directive("subscription_request") with
-		  options = sub_attrs
-	     }
-	     fired {
-	     	   raise wrangeler event "subscription" attributes sub_attrs;
-		   log "sent subscription request to new vehicle"
-	     }
-	     else {
-	     	  log "missing required attributes " + sub_attr.encode()
-	     }
-	}
+	rule introduce_myself {
+  	select when pico_systems introduction_requested
+  	pre {
+    	    sub_attrs = {
+      	    	      "name": event:attr("name"),
+      	    	      "name_space": "Closet",
+      		      "my_role": event:attr("my_role"),
+      		      "subscriber_role": event:attr("subscriber_role"),
+      		      "subscriber_eci": event:attr("subscriber_eci")
+        	      };
+        }
+  	if ( not sub_attrs{"name"}.isnull()
+    	   && not sub_attrs{"subscriber_eci"}.isnull()
+     	   ) then
+  	     send_directive("subscription_introduction_sent")
+	     with options = sub_attrs
+  	fired {
+    	      raise wrangler event 'subscription' attributes sub_attrs;
+    	      log "subcription introduction made"
+ 	}
+	else {
+    	     log "missing required attributes " + sub_attrs.encode()
+        }
+   }
 }
