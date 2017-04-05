@@ -6,61 +6,67 @@ ruleset manage_fleet {
 	     logging on
 	     sharing on
 	     use module v1_wrangler alias wrangler
-	     provides show_children
+	     provides vehicles, subs
 	}
 	global {
-	       show_children = function(){wrangler:children();}
+	       vehicles = function(){wrangler:children();}
+	       subs = function(){
+	       	    s = wrangler:subscriptions(null, "name_space", "Fleet_Management");
+		    s{"subscriptions"}
+	       }
 	}
-	rule create_a_child {
-	  select when pico_systems child_requested
+	rule create_vehicle {
+	  select when car new_vehicle
 	    pre {
-    	    	random_name = "Test_Child_" + math:random(999);
-    	    	name = event:attr("name").defaultsTo(random_name);
+    	    	random_name = "Vehicle_" + math:random(999);
+    	    	vehicle_name = event:attr("name").defaultsTo(random_name);
   	    }
   	    {
 		wrangler:createChild(name);
+		wrangler:installRulesets("b507962x4") with
+		  name = vehicle_name
 	    }
   	    always {
-    	    	   log("create child names " + name);
+    	    	   log("create vehicle " + name);
   	    }
         }
-	rule delete_a_child {
-	     select when pico_systems child_deletion_requested
+	rule delete_vehicle {
+	     select when car unneeded_vehicle
 	     pre {
 	     	 name = event:attr("name");
 	     }
 	     if (not name.isnull()) then {
 	     	wrangler:deleteChild(name);
+		
 	     }
 	     fired {
-	     	   log "Deleted child name " + name;
+	     	   log "Deleted vehicle " + name;
 	     }
 	     else {
-	     	  log "No child named " + name;
+	     	  log "No vehicle named " + name;
 	     }
 	}
-	rule install_ruleset_in_child {
-	     select when pico_systems ruleset_install_requested
+	rule subscribe_child {
+	     select when fleet_management subscribe_child
 	     pre {
-	     	 rid = event:attr("rid");
-		 pico_name = event:attr("name");
+	     	 sub_attrs = {
+		 	   "name": event:attr("name"),
+			   "name_space": "Fleet",
+			   "my_role": event_attr("fleet"),
+			   "subscriber_role": event:attr("subscriber_role"),
+			   "subscriber_eci": event:attr("subscriber_eci")
+		 };
 	     }
-	     wrangler:installRulesets(rid) with
-	       name = pico_name
+	     if (not sub_attrs{"name"}.isnull() && not sub_attrs{"subscriber_eci"}.isnull()) then {
+	     	send_directive("subscription_request") with
+		  options = sub_attrs
+	     }
 	     fired {
-	     	   log "ruleset " + rid + " installed in " + name;
+	     	   raise wrangeler event "subscription" attributes sub_attrs;
+		   log "sent subscription request to new vehicle"
 	     }
-	}
-	rule uninstall_ruleset_in_child {
-	     select when pico_systems ruleset_uninstall_requested
-	     pre {
-	     	 rid = event:attr("rid");
-		 pico_name = event:attr("name");
-	     }
-	     wrangler:uninstallRulesets(rid) with
-	       name = pico_name
-	     fired {
-	     	   log "ruleset " + rid + " uninstalled from " + name;
+	     else {
+	     	  log "missing required attributes " + sub_attr.encode()
 	     }
 	}
 }
