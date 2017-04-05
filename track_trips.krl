@@ -1,7 +1,7 @@
 ruleset track_trips{
 	meta {
-	     name "Lab 6 track_trips Ruleset"
-	     description <<CS 462 Lab 6>>
+	     name "Lab 7 track_trips Ruleset"
+	     description <<CS 462 Lab 7>>
 	     author "Christopher Pitts"
 	     logging on
 	     sharing on
