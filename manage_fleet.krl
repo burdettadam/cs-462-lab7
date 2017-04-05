@@ -56,5 +56,8 @@ ruleset manage_fleet {
 	     }
 	     wrangler:uninstallRulesets(rid) with
 	       name = pico_name
+	     fired {
+	     	   log "ruleset " + rid + " installed in " + name;
+	     }
 	}
 }
