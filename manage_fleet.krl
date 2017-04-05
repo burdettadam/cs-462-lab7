@@ -47,11 +47,11 @@ ruleset manage_fleet {
 	     }
 	}
 	rule introduce_myself {
-  	select when pico_systems introduction_requested
+  	select when fleet_management subscribe_child
   	pre {
     	    sub_attrs = {
       	    	      "name": event:attr("name"),
-      	    	      "name_space": "Closet",
+      	    	      "name_space": "Fleet",
       		      "my_role": event:attr("my_role"),
       		      "subscriber_role": event:attr("subscriber_role"),
       		      "subscriber_eci": event:attr("subscriber_eci")
