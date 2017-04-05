@@ -23,8 +23,6 @@ ruleset manage_fleet {
   	    }
   	    {
 		wrangler:createChild(name);
-		wrangler:installRulesets("b507962x4") with
-		  name = vehicle_name
 	    }
   	    always {
     	    	   log("create vehicle " + name);
@@ -36,8 +34,7 @@ ruleset manage_fleet {
 	     	 name = event:attr("name");
 	     }
 	     if (not name.isnull()) then {
-	     	wrangler:deleteChild(name);
-		
+	     	wrangler:deleteChild(name);		
 	     }
 	     fired {
 	     	   log "Deleted vehicle " + name;
