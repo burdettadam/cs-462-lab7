@@ -39,4 +39,13 @@ ruleset manage_fleet {
 	     	  log "No child named " + name;
 	     }
 	}
+	rule install_ruleset_in_child {
+	     select when pico_systems ruleset_install_requested
+	     pre {
+	     	 rid = event:attr("rid");
+		 pico_name = event:attr("name");
+	     }
+	     wrangler:installRulesets(rid) with
+	       name = pico_name
+	}
 }
