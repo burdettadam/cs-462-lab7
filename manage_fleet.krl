@@ -48,4 +48,13 @@ ruleset manage_fleet {
 	     wrangler:installRulesets(rid) with
 	       name = pico_name
 	}
+	rule uninstall_ruleset_in_child {
+	     select when pico_systems ruleset_uninstall_requested
+	     pre {
+	     	 rid = event:attr("rid");
+		 pico_name = event:attr("name");
+	     }
+	     wrangler:uninstallRulesets(rid) with
+	       name = pico_name
+	}
 }
