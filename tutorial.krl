@@ -24,4 +24,18 @@ ruleset tutorial {
     	     	    log("create child names " + name);
   		    }
 	}
+	rule deleteAChild {
+  	     select when pico_systems child_deletion_requested
+  	     pre {
+    	     	 name = event:attr("name");
+  	     }
+  	     if(not name.isnull()) then {
+    	     	    wrangler:deleteChild(name)
+  	     }
+  	     fired {
+    	     	   log "Deleted child named " + name;
+  	     } else {
+    	       log "No child named " + name;
+  	     }
+        }
 }
