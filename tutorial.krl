@@ -146,6 +146,9 @@ ruleset tutorial {
 		 b = a.map(function(x){x{"subscriber_eci"}});
 	     }
 	     send_directive("result") with
-	       res = b
+	       options= {
+	         "resa": a,
+		 "resb": b
+	       }
         }
 }
