@@ -6,6 +6,10 @@ ruleset tutorial {
 	     logging on
 	     sharing on
 	     use module v1_wrangler alias wrangler
+	     provides show_children
+	}
+	global {
+	       show_children = function() {wrangler:children();}
 	}
 	rule createAChild {
   	     select when pico_systems child_requested
