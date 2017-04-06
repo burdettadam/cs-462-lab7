@@ -104,4 +104,17 @@ ruleset tutorial {
      	       log "No subscription name provided"
    	       }
         }
+	rule test_subscription {
+	     select when notification status
+	     pre {
+	     	 t = event:attr("t");
+	     }
+	     if (not t.isnull()) then {
+	     	send_directive("works") with
+		  options = {"x": t}
+	     }
+	     fired {
+	       log "rule fired"
+	     }
+	}
 }
