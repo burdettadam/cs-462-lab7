@@ -23,8 +23,9 @@ ruleset tutorial {
 	       }
 	       sub_cids = function(){
 	           subs = wrangler:subscriptions(null, "status", "subscribed");
-		   a = subs.map(function(x){x{"inbound_eci"}})
-		   a
+		   a = subs{"subscriptions"};
+		   b = a.map(function(x){x{"inbound_eci"}});
+		   b
 	       }
 	}
 	rule createAChild {
