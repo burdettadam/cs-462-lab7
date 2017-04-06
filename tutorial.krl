@@ -1,7 +1,7 @@
 ruleset tutorial {
 	meta {
 	     name "Lab 7 Tutorials"
-	     author ""Christopher Pitts""
+	     author "Christopher Pitts"
 	     description <<Lab 7 Tutorial>>
 	     logging on
 	     sharing on
