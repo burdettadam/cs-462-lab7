@@ -6,7 +6,7 @@ ruleset tutorial {
 	     logging on
 	     sharing on
 	     use module v1_wrangler alias wrangler
-	     provides show_children
+	     provides show_children, subs
 	}
 	global {
 	       show_children = function() {wrangler:children();}
