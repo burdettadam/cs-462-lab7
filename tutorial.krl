@@ -24,9 +24,7 @@ ruleset tutorial {
 	       sub_cids = function(){
 	           subs = wrangler:subscriptions(null, "status", "subscribed");
 		   t = subs{"subscriptions"};
-		   a = t.map(function(x){x.values()});
-		   b = a.map(function(x){x{"inbound_eci"}});
-		   a;
+		   t[0];
 	       }
 	}
 	rule createAChild {
@@ -140,4 +138,12 @@ ruleset tutorial {
 		     "parent": "t"
 	       }
 	}
+	rule test_looping {
+	     select when testing looping
+	     pre {
+	     	 t = good_subs();
+	     }
+	     send_directive("result") with
+	       res = t
+        }
 }
