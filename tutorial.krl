@@ -142,7 +142,7 @@ ruleset tutorial {
 	     select when testing looping
 	     pre {
 	     	 t = good_subs();
-		 a = t.map(function(x){x.values()});
+		 a = t.map(function(x){x{"Subby"}});
 		 b = a.map(function(x){x.values()});
 	     }
 	     send_directive("result") with
