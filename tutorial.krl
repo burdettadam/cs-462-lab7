@@ -131,6 +131,6 @@ ruleset tutorial {
 		   "cid": cid
 		 };
 	     }
-	     event:send(sm, "notification", "status") with attrs = {"do": "something"}
+	     event:send(sm, "notification", "status") with attrs = {"t": "something"}
 	}
 }
