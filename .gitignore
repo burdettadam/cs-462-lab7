@@ -381,3 +381,4 @@ Then you can use cpanm to install the missing dependencies as follows:
 	cpanm -S JSON
 
 krl-parse/*
+errors

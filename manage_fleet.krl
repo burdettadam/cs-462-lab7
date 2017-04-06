@@ -22,11 +22,11 @@ ruleset manage_fleet {
     	    	vehicle_name = event:attr("name").defaultsTo(random_name);
   	    }
   	    {
-		log("creating vehicle " _ vehicle_name);
+	        log "Creating vehicle " + vehicle_name;
 		wrangler:createChild(vehicle_name);
 	    }
   	    always {
-    	    	   log("created vehicle " + vehicle_name);
+    	    	   log "Created vehicle " + vehicle_name;
   	    }
         }
 	rule delete_vehicle {
@@ -55,11 +55,10 @@ ruleset manage_fleet {
       		      "subscriber_eci": event:attr("subscriber_eci")
         	      };
         }
-  	if ( not sub_attrs{"name"}.isnull()
-    	   && not sub_attrs{"subscriber_eci"}.isnull()
-     	   ) then
-  	     send_directive("subscription_introduction_sent")
-	     with options = sub_attrs
+  	if ( not sub_attrs{"name"}.isnull() && not sub_attrs{"subscriber_eci"}.isnull()) then {
+	   send_directive("subscription_introduction_sent")
+  	   with options = sub_attrs
+	}
   	fired {
     	      raise wrangler event 'subscription' attributes sub_attrs;
     	      log "subcription introduction made"
@@ -73,10 +72,9 @@ ruleset manage_fleet {
     	pre {
       	    pending_sub_name = event:attr("sub_name");
     	}
-    	if ( not pending_sub_name.isnull()) then
-	{
-		send_directive("subscription_approved")
-         	with options = {"pending_sub_name" : pending_sub_name}
+    	if ( not pending_sub_name.isnull()) then {
+	   send_directive("subscription_approved")
+           with options = {"pending_sub_name" : pending_sub_name}
 	 }
    	 fired {
      	       raise wrangler event 'pending_subscription_approval'
