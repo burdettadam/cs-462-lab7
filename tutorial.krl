@@ -20,6 +20,11 @@ ruleset tutorial {
 	           subs = wrangler:subscriptions(null, "status", "subscribed");
 		   subs{"subscriptions"}
 	       }
+	       sub_cids = function(){
+	           subs = wrangler:subscriptions(null, "status", "subscribed");
+		   a = subs.map(function(x){x{"inbound_eci"}})
+		   a
+	       }
 	}
 	rule createAChild {
   	     select when pico_systems child_requested
@@ -116,5 +121,16 @@ ruleset tutorial {
 	     fired {
 	       log "rule fired"
 	     }
+	}
+	rule notify_children {
+	     select when pico_systems notify_children
+	     pre {
+	     	 cid = event:attr("cid");
+	     	 sm = {
+		   "name": "testing...",
+		   "cid": cid
+		 };
+	     }
+	     event:send(sm, "notififcation", "status")
 	}
 }
