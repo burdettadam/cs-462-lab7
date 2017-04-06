@@ -10,6 +10,10 @@ ruleset tutorial {
 	}
 	global {
 	       show_children = function() {wrangler:children();}
+	       subs = function() {
+  	       	    subs = wrangler:subscriptions(null, "name_space", "Closet");
+  		    subs{"subscriptions"}
+	       }
 	}
 	rule createAChild {
   	     select when pico_systems child_requested
