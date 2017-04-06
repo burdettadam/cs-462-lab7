@@ -70,7 +70,7 @@ ruleset tutorial {
       			 	   "name_space": "Closet",
       			 	   "my_role": event:attr("my_role"),
       			 	   "subscriber_role": event:attr("subscriber_role"),
-      			 q"subscriber_eci": event:attr("subscriber_eci")
+      			 	   "subscriber_eci": event:attr("subscriber_eci")
 			 };
   		     }
   		     if ( not sub_attrs{"name"}.isnull()
