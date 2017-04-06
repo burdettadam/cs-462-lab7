@@ -8,6 +8,7 @@ ruleset tutorial {
 	     use module v1_wrangler alias wrangler
 	     provides show_children
 	     provides subs
+	     provides good_subs
 	}
 	global {
 	       show_children = function() {wrangler:children();}
