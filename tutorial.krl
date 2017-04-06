@@ -27,7 +27,7 @@ ruleset tutorial {
 	rule deleteAChild {
   	     select when pico_systems child_deletion_requested
   	     pre {
-    	     	 name = event:attr("name");
+    	     	 name = event:attr("name").klog("got name: ");
   	     }
   	     if(not name.isnull()) then {
     	     	    wrangler:deleteChild(name)
