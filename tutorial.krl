@@ -15,6 +15,10 @@ ruleset tutorial {
   	       	    subs = wrangler:subscriptions(null, "name_space", "Closet");
   		    subs{"subscriptions"}
 	       }
+	       good_subs = function(){
+	           subs = wrangler:subscriptions(null, "status", "subscribed");
+		   subs{"subscriptions"}
+	       }
 	}
 	rule createAChild {
   	     select when pico_systems child_requested
