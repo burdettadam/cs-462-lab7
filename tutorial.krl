@@ -38,4 +38,23 @@ ruleset tutorial {
     	       log "No child named " + name;
   	     }
         }
+	rule installRulesetInChild {
+ 	 select when pico_systems ruleset_install_requested
+  	 pre {
+    	     rid = event:attr("rid");
+    	     pico_name = event:attr("name");
+  	 }
+  	 wrangler:installRulesets(rid) with
+    	   name = pico_name
+        }
+	rule CreateFurnaceSystem {
+	     select when pico_systems create_furnace_system
+  	     {
+		wrangler:createChild("Furnace");
+		wrangler:createChild("TempSensor");
+		wrangler:createChild("Thermostat");
+		wranglet:installRulesets("b16x30") with
+		  name = "Thermostat"
+	     }	     
+	}
 }
