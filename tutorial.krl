@@ -23,7 +23,7 @@ ruleset tutorial {
 	       }
 	       sub_cids = function(){
 	           subs = wrangler:subscriptions(null, "status", "subscribed");
-		   a = subs{"subscriptions"};
+		   a = subs.map(function(x){x.values()});
 		   b = a.map(function(x){x{"inbound_eci"}});
 		   b
 	       }
