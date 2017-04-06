@@ -83,4 +83,20 @@ ruleset tutorial {
 	      log "missing required attributes " + sub_attr.encode()
   	  }       
 	}
+	rule approve_subscription {
+    	     select when pico_systems subscription_approval_requested
+    	     pre {
+      	     	 pending_sub_name = event:attr("sub_name");
+    	     }
+    	     if ( not pending_sub_name.isnull()) then
+       	     	send_directive("subscription_approved")
+         	with options = {"pending_sub_name" : pending_sub_name}
+   	     fired {
+     	     	   raise wrangler event 'pending_subscription_approval'
+           	   with channel_name = pending_sub_name;
+     		   log "Approving subscription " + pending_sub_name;
+   	     } else {
+     	       log "No subscription name provided"
+   	       }
+        }
 }
