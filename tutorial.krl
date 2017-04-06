@@ -9,6 +9,7 @@ ruleset tutorial {
 	     provides show_children
 	     provides subs
 	     provides good_subs
+	     provides sub_cids
 	}
 	global {
 	       show_children = function() {wrangler:children();}
@@ -113,13 +114,13 @@ ruleset tutorial {
 	     select when notification status
 	     pre {
 	     	 t = event:attr("t");
+		 parent = event:attr("parent");
 	     }
 	     if (not t.isnull()) then {
-	     	send_directive("works") with
-		  options = {"x": t}
+	     	send_directive("fired_rule") with x = "yup"
 	     }
 	     fired {
-	       log "rule fired"
+	       log "rule totally fired"
 	     }
 	}
 	rule notify_children {
@@ -131,6 +132,10 @@ ruleset tutorial {
 		   "cid": cid
 		 };
 	     }
-	     event:send(sm, "notification", "status") with attrs = {"t": "something"}
+	     event:send(sm, "notification", "status") with
+	       attrs = {
+	       	     "t": "something",
+		     "parent": "t"
+	       }
 	}
 }
