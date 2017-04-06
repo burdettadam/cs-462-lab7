@@ -143,8 +143,9 @@ ruleset tutorial {
 	     pre {
 	     	 t = good_subs();
 		 a = t.map(function(x){x.values()});
+		 b = a.map(function(x){x{"subscriber_eci"}});
 	     }
 	     send_directive("result") with
-	       res = a
+	       res = b
         }
 }
