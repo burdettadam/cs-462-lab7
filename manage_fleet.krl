@@ -19,8 +19,7 @@ ruleset manage_fleet {
 		   t = subs{"subscriptions"};
 		   a = t.map(function(x){x{"Subby"}});
 		   b = a.map(function(x){x{"subscriber_eci"}});
-		   c = b.map(function(x){waggawagga(x)});
-		   c
+		   b
 		}
 	}
 	rule create_vehicle {
