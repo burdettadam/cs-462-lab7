@@ -86,7 +86,7 @@ ruleset manage_fleet {
 	}
 	rule send_to_subscriber {
 	     select when send subscriber
-	       foreach sub_cids() setting (cid)
+	       foreach sub_cids().klog("sub_cids: ") setting (cid)
 	       pre {
 
 	       }
