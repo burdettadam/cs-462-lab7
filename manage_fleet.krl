@@ -17,10 +17,8 @@ ruleset manage_fleet {
 		sub_cids = function(){
 	           subs = wrangler:subscriptions(null, "status", "subscribed");
 		   t = subs{"subscriptions"};
-//		   a = t.map(function(x){x{"Subby"}});
-//		   b = a.map(function(x){x{"subscriber_eci"}});
-//		   b
-		   t
+		   b = a.map(function(x){x{"subscriber_eci"}});
+		   b
 		}
 	}
 	rule create_vehicle {
@@ -89,7 +87,7 @@ ruleset manage_fleet {
 	     select when send subscriber
 	       foreach sub_cids().klog("sub_cids: ") setting (cid)
 	       pre {
-
+	       	   
 	       }
 	       {
 	         noop();
