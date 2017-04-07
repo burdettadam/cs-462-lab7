@@ -17,9 +17,10 @@ ruleset manage_fleet {
 		sub_cids = function(){
 	           subs = wrangler:subscriptions(null, "status", "subscribed");
 		   t = subs{"subscriptions"};
-		   a = t.map(function(x){x{"Subby"}});
-		   b = a.map(function(x){x{"subscriber_eci"}});
-		   b
+//		   a = t.map(function(x){x{"Subby"}});
+//		   b = a.map(function(x){x{"subscriber_eci"}});
+//		   b
+		   t
 		}
 	}
 	rule create_vehicle {
