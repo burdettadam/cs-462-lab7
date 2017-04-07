@@ -15,7 +15,6 @@ ruleset manage_fleet {
 			s{"subscriptions"}
 		}
 	}
-
 	rule create_vehicle {
 		select when car new_vehicle
 		pre {
@@ -23,11 +22,10 @@ ruleset manage_fleet {
 			vehicle_name = event:attr("name").defaultsTo(random_name);
 		}
 		{
-			log("Creating vehicle " + vehicle_name);
 			wrangler:createChild(vehicle_name);
 		}
-		always {
-			log("Created vehicle " + vehicle_name);
+		fired {
+		      log "Created vehicle";
 		}
 	}
 	rule delete_vehicle {
@@ -36,13 +34,10 @@ ruleset manage_fleet {
 			name = event:attr("name");
 		}
 		if ( not name.isnull()) then {
-			wrangler:deleteChild(name);		
+			wrangler:deleteChild(name);
 		}
 		fired {
-			log("Deleted vehicle " + name);
-		}
-		else {
-			log("No vehicle named " + name);
+		      log "Deleted vehicle";
 		}
 	}
 	
@@ -64,10 +59,7 @@ ruleset manage_fleet {
 		}
 		fired {
 			raise wrangler event 'subscription' attributes sub_attrs;
-			log("subcription introduction made");
-		}
-		else {
-			log("missing required attributes " + sub_attrs.encode());
+			log "Subscription added";
 		}
 	}
 	rule approve_subscription {
@@ -82,10 +74,7 @@ ruleset manage_fleet {
 		fired {
 			raise wrangler event 'pending_subscription_approval'
 			with channel_name = pending_sub_name;
-			log("Approving subscription " + pending_sub_name);
-		}
-		else {
-			log("No subscription name provided")
+			log "Subscription approved";
 		}
 	}
 }
