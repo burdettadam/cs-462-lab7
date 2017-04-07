@@ -153,7 +153,8 @@ ruleset tutorial {
 	     send_directive("result") with
 	       options= {
 	         "resa": a,
-		 "resb": b
+		 "resb": b,
+		 "resc": c
 	       }
         }
 }
