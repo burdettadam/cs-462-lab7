@@ -26,6 +26,10 @@ ruleset tutorial {
 		   t = subs{"subscriptions"};
 		   t[0];
 	       }
+	       waggawagga = function(x){
+	           x = x + "2";
+		   x
+	       }
 	}
 	rule createAChild {
   	     select when pico_systems child_requested
@@ -144,6 +148,7 @@ ruleset tutorial {
 	     	 t = good_subs();
 		 a = t.map(function(x){x{"Subby"}});
 		 b = a.map(function(x){x{"subscriber_eci"}});
+		 c = b.map(function(x){waggawagga(x)});
 	     }
 	     send_directive("result") with
 	       options= {
