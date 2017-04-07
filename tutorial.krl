@@ -27,7 +27,7 @@ ruleset tutorial {
 		   t[0];
 	       }
 	       waggawagga = function(x){
-	           x = x + "2";
+	           y = "2";
 		   x
 	       }
 	}
