@@ -65,7 +65,7 @@ ruleset manage_fleet {
 		}
 		fired {
 			raise wrangler event 'subscription' attributes sub_attrs;
-			log "Subscription added";
+			//log "Subscription added";
 		}
 	}
 	rule approve_subscription {
