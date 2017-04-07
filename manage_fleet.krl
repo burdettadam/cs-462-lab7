@@ -14,6 +14,14 @@ ruleset manage_fleet {
 			s = wrangler:subscriptions(null, "name_space", "Fleet_Management");
 			s{"subscriptions"}
 		}
+		sub_cids = function(){
+	           subs = wrangler:subscriptions(null, "status", "subscribed");
+		   t = subs{"subscriptions"};
+		   a = t.map(function(x){x{"Subby"}});
+		   b = a.map(function(x){x{"subscriber_eci"}});
+		   c = b.map(function(x){waggawagga(x)});
+		   c
+		}
 	}
 	rule create_vehicle {
 		select when car new_vehicle
@@ -77,4 +85,20 @@ ruleset manage_fleet {
 			log "Subscription approved";
 		}
 	}
+	rule send_to_subscriber {
+	     select when send subscriber
+	       foreach sub_cids() setting (cid)
+	       pre {
+
+	       }
+	       {
+	         noop();
+		 event:send({"cid":cid}, "sent", "subscriber")
+		 with attrs = attr.klog("attributes: "); 
+	       }
+	       always {
+	         raise sent event "subscriber_was_sent_too"
+		 attributes attr.klog("attributes: ");
+	       }
+        }
 }
